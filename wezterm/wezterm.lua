@@ -15,10 +15,11 @@ config.font = wezterm.font_with_fallback({
 })
 
 -- looks
-config.color_scheme = 'Gruvbox Material (Gogh)'
-config.window_background_opacity = 0.8
-config.win32_system_backdrop = 'Acrylic'
+config.color_scheme = 'Catppuccin Macchiato'
+config.window_background_opacity = 0.0
 config.window_decorations = 'RESIZE'
+config.win32_system_backdrop = 'Acrylic'
+
 config.window_padding = {
 	left = 0,
 	right = 0,
