@@ -19,7 +19,12 @@ opt.expandtab = true
 opt.softtabstop = 4
 opt.shiftwidth = 4
 
+-- indentation becomes context aware
 opt.smartindent = true
 opt.autoindent = true
+
+opt.updatetime = 250
+
+opt.scrolloff = 10
 
 

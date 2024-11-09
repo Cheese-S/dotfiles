@@ -28,11 +28,15 @@ map("v", "<A-k>", ":m '< -2<cr>gv=gv")
 -- insert blank line
 map("n", "<leader>o", 'o<esc>"_S<esc>')
 
+-- remove highlight after search
+map("n", "<esc>", "<cmd>noh<cr>")
+
 -- PLUGINS
 -- fzf keymaps
 local fzf = require("fzf-lua")
 map("n", "<leader>gf", fzf.files)
 map("n", "<leader>gb", fzf.buffers)
+map("n", "<leader>l", fzf.blines)
 map("n", "/", fzf.live_grep)
 
 -- oil keymaps

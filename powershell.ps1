@@ -1,5 +1,6 @@
 # start-up
 Invoke-Expression (&starship init powershell)
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # fzf-configs
 $env:FZF_MOVEMENT="
@@ -10,4 +11,4 @@ $env:FZF_DEFAULT_OPTS="$env:FZF_MOVEMENT"
 
 # custom shortcut
 Set-Alias -Name open -Value explorer.exe
-Set-Alias -Name gs -Value "git status"
+#Set-Alias -Name gs -Value git status

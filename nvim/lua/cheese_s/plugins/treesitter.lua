@@ -8,7 +8,8 @@ return {
             "lua",
             "vim",
             "markdown",
-            "powershell"
+            "powershell",
+            "objc"
         },
         auto_install = true,
         highlight = {

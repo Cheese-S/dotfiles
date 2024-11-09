@@ -27,5 +27,16 @@ config.window_padding = {
 	bottom = 0,
 }
 
+-- keymap
+local act = wezterm.action
+
+config.keys = {
+    {
+        key = 't',
+        mods = 'SHIFT|ALT',
+        action = act.SpawnTab 'CurrentPaneDomain',
+    },
+}
+
 return config
 
