@@ -2,7 +2,21 @@ local wezterm = require 'wezterm'
 
 local config = wezterm.config_builder()
 
-config.default_prog = { 'powershell.exe' }
+local is_darwin <const> = wezterm.target_triple:find("darwin") ~= nil
+local is_windows <const> = not is_darwin
+
+-- windows only
+if is_windows then
+    config.default_prog = { 'powershell.exe' }
+    config.win32_system_backdrop = 'Acrylic'
+    config.window_background_opacity = 0.0
+end
+
+-- mac only
+if is_darwin then
+    config.macos_window_background_blur = 40
+    config.window_background_opacity = 0.3
+end
 
 -- font
 config.font = wezterm.font_with_fallback({
@@ -15,10 +29,8 @@ config.font = wezterm.font_with_fallback({
 })
 
 -- looks
-config.color_scheme = 'Catppuccin Macchiato'
-config.window_background_opacity = 0.0
+config.color_scheme = 'Gruvbox Material (Gogh)'
 config.window_decorations = 'RESIZE'
-config.win32_system_backdrop = 'Acrylic'
 
 config.window_padding = {
 	left = 0,
