@@ -1,9 +1,10 @@
 vim.g.termguicolors = true
 
 -- use system clipboard
-vim.api.nvim_set_option("clipboard", "unnamedplus")
 
 local opt = vim.opt
+
+opt.clipboard = "unnamedplus"
 
 opt.autowrite = true
 
@@ -23,8 +24,17 @@ opt.shiftwidth = 4
 opt.smartindent = true
 opt.autoindent = true
 
-opt.updatetime = 250
+opt.updatetime = 200
 
-opt.scrolloff = 10
+-- try to always center
+opt.scrolloff = 999
+
+opt.signcolumn = 'yes'
+
+
+
+-- enable persistent undo tree
+vim.o.undofile = true
+
 
 
