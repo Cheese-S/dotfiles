@@ -1,10 +1,13 @@
 return {
-	'stevearc/oil.nvim',
+	"stevearc/oil.nvim",
 	opts = {
-        view_options = {
-            show_hidden = true
-        },
-        skip_confirm_for_simple_edits = false,
-    },
-	dependencies = {"nvim-tree/nvim-web-devicons"}
+		view_options = {
+			show_hidden = true,
+		},
+		skip_confirm_for_simple_edits = true,
+		keymaps = {
+			["<c-h>"] = "false",
+		},
+	},
+	dependencies = { "nvim-tree/nvim-web-devicons" },
 }
