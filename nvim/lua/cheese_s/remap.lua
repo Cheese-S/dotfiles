@@ -93,3 +93,38 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
     end,
 })
+
+-- smart-splits. This needs to be kept the same in wezterm.lua
+local splits = require("smart-splits")
+map("n", "<c-Up>", splits.resize_up)
+map("n", "<c-Down>", splits.resize_down)
+map("n", "<c-Left>", splits.resize_left)
+map("n", "<c-Right>", splits.resize_right)
+
+map({ "n", "v", "i" }, "<c-h>", splits.move_cursor_left)
+map({ "n", "v", "i" }, "<c-j>", splits.move_cursor_down)
+map({ "n", "v", "i" }, "<c-k>", splits.move_cursor_up)
+map({ "n", "v", "i" }, "<c-l>", splits.move_cursor_right)
+
+-- cmp
+local cmp = require("cmp")
+cmp.setup({
+	mapping = {
+		["<A-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+		["<A-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+		["<S-j>"] = cmp.mapping.scroll_docs(4),
+		["<S-k>"] = cmp.mapping.scroll_docs(-4),
+		["<CR>"] = function(fallback)
+			if cmp.visible() then
+				cmp.confirm()
+			else
+				fallback()
+			end
+		end,
+	},
+})
+
+-- gitsigns
+local gitsigns = require("gitsigns")
+map("n", "<leader>hs", gitsigns.stage_hunk)
+map("n", "<leader>hr", gitsigns.reset_hunk)
