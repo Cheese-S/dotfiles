@@ -12,3 +12,4 @@ $env:FZF_DEFAULT_OPTS="$env:FZF_MOVEMENT"
 # custom shortcut
 Set-Alias -Name open -Value explorer.exe
 #Set-Alias -Name gs -Value git status
+del alias:diff -Force
