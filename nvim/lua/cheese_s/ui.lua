@@ -13,12 +13,19 @@ end
 
 function components.icon()
 	local icon, color = icons.get_icon_color(vim.fs.basename(), vim.bo.filetype)
-	vim.api.nvim_set_hl(0, "StatusLineIcon", { fg = color })
-	return components.fmt("StatusLineIcon", icon)
+	if icon then
+		vim.api.nvim_set_hl(0, "StatusLineIcon", { fg = color })
+		return components.fmt("StatusLineIcon", icon)
+	end
+	return ""
 end
 
 function components.branch()
-	return components.fmt("PurpleBold", " " .. vim.g.gitsigns_head)
+	local head = vim.g.gitsigns_head
+	if head == nil then
+		return ""
+	end
+	return components.fmt("PurpleBold", " " .. head)
 end
 
 function components.status()
@@ -136,6 +143,7 @@ local statusline = {
 }
 
 -- winbar
+vim.o.laststatus = 3
 vim.o.statusline = table.concat(statusline, "")
 
 local winbar = {

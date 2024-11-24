@@ -6,7 +6,7 @@ return {
 		-- Optionally configure and load the colorscheme
 		-- directly inside the plugin declaration.
 		vim.g.gruvbox_material_transparent_background = "2"
-		-- vim.g.gruvbox_material_foreground = "mix"
+		vim.g.gruvbox_material_foreground = "mix"
 		vim.g.gruvbox_material_enable_bold = true
 		-- vim.api.nvim_set_hl(0, "Normal", { link = "DiffAdd" })
 		vim.cmd.colorscheme("gruvbox-material")

@@ -31,10 +31,10 @@ opt.scrolloff = 999
 
 opt.signcolumn = "yes"
 
+opt.showmode = false
+
 -- enable persistent undo tree
 vim.o.undofile = true
-
-vim.o.cmdheight = 1
 
 -- change lsp icons
 vim.diagnostic.config({
