@@ -58,7 +58,8 @@ local fzf = require("fzf-lua")
 
 map("n", "<leader>gf", fzf.files)
 map("n", "<leader>gb", fzf.buffers)
--- map("n", "<leader>gs", fzf.lsp_live_workspace_symbols)
+map("n", "<leader>gs", fzf.lsp_document_symbols)
+map("n", "<leader>gas", fzf.lsp_workspace_symbols)
 map("n", "<leader>l", fzf.blines)
 map("n", "<leader>fa", fzf.live_grep)
 
@@ -190,4 +191,9 @@ end)
 -- snacks
 map("n", "<leader>gg", function()
 	Snacks.lazygit()
+end)
+
+-- markdown preview
+map("n", "<leader>mp", function()
+	vim.cmd("MarkdownPreview")
 end)

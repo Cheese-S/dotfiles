@@ -33,6 +33,8 @@ opt.signcolumn = "yes"
 
 opt.showmode = false
 
+opt.wrap = false
+
 -- enable persistent undo tree
 vim.o.undofile = true
 

@@ -111,7 +111,16 @@ return {
 		})
 
 		cmp.setup.cmdline("/", {
-			mapping = cmp.mapping.preset.cmdline(),
+			mapping = cmp.mapping.preset.cmdline({
+				["<CR>"] = {
+					c = function(default)
+						if cmp.visible() and cmp.get_active_entry() then
+							return cmp.confirm()
+						end
+						default()
+					end,
+				},
+			}),
 			sources = {
 				{ name = "buffer" },
 			},
