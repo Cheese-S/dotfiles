@@ -12,6 +12,7 @@ New-Item -Path ~/AppData/Local/nvim -ItemType SymbolicLink -Value ~/.config/nvim
 
 winget install --id=LLVM.LLVM  -e -i 
 winget install --id=Neovim.Neovim  -e
+winget install --id=BurntSushi.ripgrep.MSVC  -e
 winget install --id=junegunn.fzf  -e
 	
 winget install --id=ajeetdsouza.zoxide  -e
