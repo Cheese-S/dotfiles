@@ -35,23 +35,25 @@ opt.showmode = false
 
 opt.wrap = false
 
+opt.relativenumber = true
+
 -- enable persistent undo tree
 vim.o.undofile = true
 
 -- change lsp icons
 vim.diagnostic.config({
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = "",
-			[vim.diagnostic.severity.WARN] = "",
-			[vim.diagnostic.severity.INFO] = "",
-			[vim.diagnostic.severity.HINT] = "󰌵",
-		},
-	},
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.INFO] = "",
+            [vim.diagnostic.severity.HINT] = "󰌵",
+        },
+    },
 })
 
 -- make help always open window horizontally
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "help",
-	command = "wincmd L",
+    pattern = "help",
+    command = "wincmd L",
 })

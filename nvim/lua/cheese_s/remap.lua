@@ -25,6 +25,10 @@ map({ "n", "v" }, "<leader>wj", "<cmd>belowright hor sp<cr>")
 -- map("n", "<C-Right>", "<cmd> vertical resize +5<cr>")
 -- map("n", "<C-Left>", "<cmd> vertical resize -5<cr>")
 
+-- jump around and refocus
+map("n", "<C-u>", "<C-u>zz")
+map("n", "<C-d>", "<C-d>zz")
+
 -- move lines above below
 map("n", "<A-j>", ":m+ <cr> ==")
 map("n", "<A-k>", ":m-2<cr> ==")
@@ -47,9 +51,9 @@ map("v", "<C-_>", "gc_`>^", { remap = true })
 
 -- insert comma at the end
 map({ "n" }, "<leader>;", function()
-	local cursor = vim.api.nvim_win_get_cursor(0)
-	vim.cmd("norm A;")
-	vim.api.nvim_win_set_cursor(0, cursor)
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    vim.cmd("norm A;")
+    vim.api.nvim_win_set_cursor(0, cursor)
 end, { noremap = true, silent = true })
 
 -- plugins
@@ -60,18 +64,18 @@ map("n", "<leader>gf", fzf.files)
 map("n", "<leader>gb", fzf.buffers)
 map("n", "<leader>gs", fzf.lsp_document_symbols)
 map("n", "<leader>gas", fzf.lsp_workspace_symbols)
-map("n", "<leader>l", fzf.blines)
+map("n", "<leader>fs", fzf.blines)
 map("n", "<leader>fa", fzf.live_grep)
 
 fzf.setup({
-	keymap = {
-		builtin = {
-			["<S-j>"] = "preview-down",
-			["<S-k>"] = "preview-up",
-			["<S-down>"] = "preview-page-down",
-			["<S-up>"] = "preview-page-up",
-		},
-	},
+    keymap = {
+        builtin = {
+            ["<S-j>"] = "preview-down",
+            ["<S-k>"] = "preview-up",
+            ["<S-down>"] = "preview-page-down",
+            ["<S-up>"] = "preview-page-up",
+        },
+    },
 })
 -- oil keymaps
 local oil = require("oil")
@@ -81,22 +85,22 @@ map("n", "<leader>e", oil.toggle_float)
 -- harpoon keymaps
 local harpoon = require("harpoon")
 map("n", "<leader>ha", function()
-	harpoon:list():add()
+    harpoon:list():add()
 end)
 map("n", "<leader>hl", function()
-	harpoon.ui:toggle_quick_menu(harpoon:list())
+    harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 map("n", "<leader>1", function()
-	harpoon:list():select(1)
+    harpoon:list():select(1)
 end)
 map("n", "<leader>2", function()
-	harpoon:list():select(2)
+    harpoon:list():select(2)
 end)
 map("n", "<leader>3", function()
-	harpoon:list():select(3)
+    harpoon:list():select(3)
 end)
 map("n", "<leader>4", function()
-	harpoon:list():select(4)
+    harpoon:list():select(4)
 end)
 
 -- undotree keymaps
@@ -104,20 +108,20 @@ map("n", "<leader>u", "<cmd>UndotreeToggle<cr>")
 
 -- lsp
 vim.api.nvim_create_autocmd("LspAttach", {
-	desc = "LSP actions",
-	callback = function(e)
-		local opts = { buffer = e.buf }
-		map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-		map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-		map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-		map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
-		map("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-		map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-		map("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-		map("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-		map({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-		map("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
-	end,
+    desc = "LSP actions",
+    callback = function(e)
+        local opts = { buffer = e.buf }
+        map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+        map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
+        map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
+        map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
+        map("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+        map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
+        map("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
+        map("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+        map({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+        map("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+    end,
 })
 
 -- smart-splits. This needs to be kept the same in wezterm.lua
@@ -135,38 +139,38 @@ map({ "n", "v", "i" }, "<c-l>", splits.move_cursor_right)
 -- cmp
 local cmp = require("cmp")
 cmp.setup({
-	mapping = {
-		["<A-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-		["<A-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-		["<S-j>"] = cmp.mapping.scroll_docs(4),
-		["<S-k>"] = cmp.mapping.scroll_docs(-4),
-		["<CR>"] = function(fallback)
-			if cmp.visible() and cmp.get_active_entry() then
-				cmp.confirm()
-			else
-				fallback()
-			end
-		end,
-	},
+    mapping = {
+        ["<A-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+        ["<A-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+        ["<S-j>"] = cmp.mapping.scroll_docs(4),
+        ["<S-k>"] = cmp.mapping.scroll_docs(-4),
+        ["<CR>"] = function(fallback)
+            if cmp.visible() and cmp.get_active_entry() then
+                cmp.confirm()
+            else
+                fallback()
+            end
+        end,
+    },
 })
 
 -- gitsigns
 local gitsigns = require("gitsigns")
 
 map("n", "]c", function()
-	if vim.wo.diff then
-		vim.cmd.normal({ "]c", bang = true })
-	else
-		gitsigns.nav_hunk("next")
-	end
+    if vim.wo.diff then
+        vim.cmd.normal({ "]c", bang = true })
+    else
+        gitsigns.nav_hunk("next")
+    end
 end)
 
 map("n", "[c", function()
-	if vim.wo.diff then
-		vim.cmd.normal({ "[c", bang = true })
-	else
-		gitsigns.nav_hunk("prev")
-	end
+    if vim.wo.diff then
+        vim.cmd.normal({ "[c", bang = true })
+    else
+        gitsigns.nav_hunk("prev")
+    end
 end)
 
 map("n", "<leader>hs", gitsigns.stage_hunk)
@@ -176,24 +180,24 @@ map("n", "<leader>hp", gitsigns.preview_hunk_inline)
 -- persistence
 local persistence = require("persistence")
 map("n", "<leader>p.", function()
-	persistence.load()
+    persistence.load()
 end)
 map("n", "<leader>pl", function()
-	persistence.select()
+    persistence.select()
 end)
 map("n", "<leader>pla", function()
-	persistence.load({ last = true })
+    persistence.load({ last = true })
 end)
 map("n", "<leader>pd", function()
-	persistence.stop()
+    persistence.stop()
 end)
 
 -- snacks
 map("n", "<leader>gg", function()
-	Snacks.lazygit()
+    Snacks.lazygit()
 end)
 
 -- markdown preview
 map("n", "<leader>mp", function()
-	vim.cmd("MarkdownPreview")
+    vim.cmd("MarkdownPreview")
 end)

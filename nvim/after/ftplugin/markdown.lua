@@ -1,4 +1,6 @@
 local opt = vim.opt
 
+opt.textwidth = 0
+opt.wrapmargin = 0
 opt.wrap = true
-opt.textwidth = 80
+opt.linebreak = true
