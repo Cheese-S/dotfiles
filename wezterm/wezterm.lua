@@ -61,22 +61,24 @@ wezterm.on("update-right-status", function(window, pane)
     window:set_right_status(window:active_workspace())
 end)
 
+config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+
 config.keys = {
     -- tabs
     {
         key = "t",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.SpawnTab("CurrentPaneDomain"),
     },
     {
         key = "w",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.CloseCurrentTab({ confirm = false }),
     },
     -- panes
     {
         key = "l",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.SplitPane({
             direction = "Right",
             size = { Percent = 50 },
@@ -84,7 +86,7 @@ config.keys = {
     },
     {
         key = "h",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.SplitPane({
             direction = "Left",
             size = { Percent = 50 },
@@ -92,7 +94,7 @@ config.keys = {
     },
     {
         key = "j",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.SplitPane({
             direction = "Down",
             size = { Percent = 50 },
@@ -100,7 +102,7 @@ config.keys = {
     },
     {
         key = "k",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.SplitPane({
             direction = "Up",
             size = { Percent = 50 },
@@ -109,14 +111,14 @@ config.keys = {
     -- workspaces
     {
         key = "p",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.ShowLauncherArgs({
             flags = "FUZZY|WORKSPACES",
         }),
     },
     {
         key = "n",
-        mods = "SHIFT|ALT",
+        mods = "LEADER",
         action = act.PromptInputLine({
             description = wezterm.format({
                 { Attribute = { Intensity = "Bold" } },
