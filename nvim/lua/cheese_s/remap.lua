@@ -49,7 +49,7 @@ map("n", "gn", "<C-i>")
 map("n", "<C-_>", "gc_", { remap = true })
 map("v", "<C-_>", "gc_`>^", { remap = true })
 
--- insert comma at the end
+-- insert semicolon at the end
 map({ "n" }, "<leader>;", function()
     local cursor = vim.api.nvim_win_get_cursor(0)
     vim.cmd("norm A;")

@@ -28,6 +28,8 @@ config.font = wezterm.font_with_fallback({
     },
 })
 
+config.font_size = 13.0
+
 -- looks
 config.color_scheme = "Gruvbox Material (Gogh)"
 config.window_decorations = "RESIZE"
@@ -155,6 +157,7 @@ for i = 1, 4 do
     })
 end
 
+-- plugins
 -- splits
 local splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 splits.apply_to_config(config, {
@@ -167,5 +170,7 @@ splits.apply_to_config(config, {
         resize = "CTRL",
     },
 })
+
+-- resurrect
 
 return config
