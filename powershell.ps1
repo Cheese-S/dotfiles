@@ -13,3 +13,15 @@ $env:FZF_DEFAULT_OPTS="$env:FZF_MOVEMENT"
 Set-Alias -Name open -Value explorer.exe
 #Set-Alias -Name gs -Value git status
 del alias:diff -Force
+
+function fmt {
+     python3 .\Tools\clang-tools\run-clang-format.py
+}
+
+function gs {
+    git status
+}
+
+function lg {
+    lazygit
+}
