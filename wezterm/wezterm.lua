@@ -28,7 +28,7 @@ config.font = wezterm.font_with_fallback({
     },
 })
 
-config.font_size = 13.0
+config.font_size = 16.0
 
 -- looks
 config.color_scheme = "Gruvbox Material (Gogh)"
@@ -109,6 +109,11 @@ config.keys = {
             direction = "Up",
             size = { Percent = 50 },
         }),
+    },
+    {
+        key = "s",
+        mods = "LEADER",
+        action = act.CloseCurrentPane { confirm = false }
     },
     -- workspaces
     {
