@@ -25,3 +25,7 @@ function gs {
 function lg {
     lazygit
 }
+
+function regen {
+    python ./regenerate_cmake.py
+}

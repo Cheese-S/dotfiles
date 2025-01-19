@@ -10,6 +10,7 @@ return {
 		local mason = require("mason")
 		local mason_opts = {
 			ensure_installed = {
+				-- formatters
 				"stylua",
 				"clang-format",
 				"yapf",
@@ -36,6 +37,7 @@ return {
 				"clangd",
 				"pyright",
 				"marksman",
+				"rust_analyzer",
 			},
 			handlers = {
 				function(server_name)
@@ -47,5 +49,7 @@ return {
 		lspconfig.clangd.setup({
 			cmd = { "clangd", "--function-arg-placeholders=0" },
 		})
+
+		lspconfig.rust_analyzer.setup({})
 	end,
 }

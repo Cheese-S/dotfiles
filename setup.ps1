@@ -23,4 +23,4 @@ winget install --id=GnuWin32.DiffUtils  -e
 
 winget install -e --id=JesseDuffield.lazygit
 
-
+winget install --id=Kitware.CMake  -e
