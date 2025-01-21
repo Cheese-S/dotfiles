@@ -52,6 +52,9 @@ map("n", "gn", "<C-i>")
 map("n", "<C-_>", "gc_", { remap = true })
 map("v", "<C-_>", "gc_`>^", { remap = true })
 
+-- marks
+map("n", "<leader>ma", "<cmd>delmarks A-Z0-9")
+
 -- insert semicolon at the end
 map({ "n" }, "<leader>;", function()
 	local cursor = vim.api.nvim_win_get_cursor(0)
@@ -104,6 +107,9 @@ map("n", "<leader>3", function()
 end)
 map("n", "<leader>4", function()
 	harpoon:list():select(4)
+end)
+map("n", "<leader>5", function()
+	harpoon:list():select(5)
 end)
 
 -- undotree keymaps
