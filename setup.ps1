@@ -21,6 +21,8 @@ winget install --id=Starship.Starship  -e
 # Need to add to env 
 winget install --id=GnuWin32.DiffUtils  -e
 
-winget install -e --id=JesseDuffield.lazygit
+winget install --id=JesseDuffield.lazygit -e
 
-winget install --id=Kitware.CMake  -e
+winget install --id=Kitware.CMake -e
+ 
+winget install --id=Ninja-build.Ninja  -e
