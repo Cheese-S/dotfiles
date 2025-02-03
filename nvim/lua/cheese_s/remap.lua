@@ -6,6 +6,7 @@ map("i", "jk", "<esc>")
 
 -- save file
 map("n", "<leader>ss", "<cmd>w<cr><esc>")
+map("n", "<leader>sa", "<cmd>wa<CR><esc>")
 
 -- search and replace
 map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -130,6 +131,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>R", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 		map({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
 		map("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+		map("n", "<leader>se", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", opts)
 	end,
 })
 
@@ -185,26 +187,6 @@ end)
 map("n", "<leader>hs", gitsigns.stage_hunk)
 map("n", "<leader>hr", gitsigns.reset_hunk)
 map("n", "<leader>hp", gitsigns.preview_hunk_inline)
-
--- persistence
-local persistence = require("persistence")
-map("n", "<leader>p.", function()
-	persistence.load()
-end)
-map("n", "<leader>pl", function()
-	persistence.select()
-end)
-map("n", "<leader>pla", function()
-	persistence.load({ last = true })
-end)
-map("n", "<leader>pd", function()
-	persistence.stop()
-end)
-
--- snacks
-map("n", "<leader>gg", function()
-	Snacks.lazygit()
-end)
 
 -- markdown preview
 map("n", "<leader>mp", function()

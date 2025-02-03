@@ -47,7 +47,11 @@ return {
 		})
 
 		lspconfig.clangd.setup({
-			cmd = { "clangd", "--function-arg-placeholders=0" },
+			cmd = {
+				"clangd",
+				"--function-arg-placeholders=0",
+				"--header-insertion=never",
+			},
 		})
 
 		lspconfig.rust_analyzer.setup({})

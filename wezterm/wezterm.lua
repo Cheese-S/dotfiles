@@ -41,6 +41,7 @@ config.window_padding = {
 	bottom = 0,
 }
 config.max_fps = 240
+config.enable_tab_bar = false
 
 -- keymap
 local act = wezterm.action
@@ -61,6 +62,38 @@ end)
 -- workspace
 wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(window:active_workspace())
+end)
+
+-- plugins
+-- splits
+local splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+
+-- resurrect
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+resurrect.periodic_save()
+
+-- workspace_switcher
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
+workspace_switcher.get_choices = function(opts)
+	-- this will ONLY show the workspace elements, NOT the Zoxide results
+	return workspace_switcher.choices.get_workspace_elements({})
+end
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, path, label)
+	local workspace_state = resurrect.workspace_state
+
+	workspace_state.restore_workspace(resurrect.load_state(label, "workspace"), {
+		window = window,
+		relative = true,
+		restore_text = true,
+		on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+	})
+end)
+
+-- Saves the state whenever I select a workspace
+wezterm.on("smart_workspace_switcher.workspace_switcher.selected", function(window, path, label)
+	local workspace_state = resurrect.workspace_state
+	resurrect.save_state(workspace_state.get_workspace_state())
 end)
 
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
@@ -113,39 +146,43 @@ config.keys = {
 	{
 		key = "s",
 		mods = "LEADER",
-		action = act.CloseCurrentPane({ confirm = false }),
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+			resurrect.window_state.save_window_action()
+			resurrect.tab_state.save_tab_action()
+		end),
+	},
+	{
+		key = "r",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.fuzzy_load(win, pane, function(id, label)
+				local type = string.match(id, "^([^/]+)") -- match before '/'
+				id = string.match(id, "([^/]+)$") -- match after '/'
+				id = string.match(id, "(.+)%..+$") -- remove file extention
+				local opts = {
+					relative = true,
+					restore_text = true,
+					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+				}
+				if type == "workspace" then
+					local state = resurrect.load_state(id, "workspace")
+					resurrect.workspace_state.restore_workspace(state, opts)
+				elseif type == "window" then
+					local state = resurrect.load_state(id, "window")
+					resurrect.window_state.restore_window(pane:window(), state, opts)
+				elseif type == "tab" then
+					local state = resurrect.load_state(id, "tab")
+					resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+				end
+			end)
+		end),
 	},
 	-- workspaces
 	{
-		key = "p",
+		key = "g",
 		mods = "LEADER",
-		action = act.ShowLauncherArgs({
-			flags = "FUZZY|WORKSPACES",
-		}),
-	},
-	{
-		key = "n",
-		mods = "LEADER",
-		action = act.PromptInputLine({
-			description = wezterm.format({
-				{ Attribute = { Intensity = "Bold" } },
-				{ Foreground = { AnsiColor = "Fuchsia" } },
-				{ Text = "Enter name for new workspace" },
-			}),
-			action = wezterm.action_callback(function(window, pane, line)
-				-- line will be `nil` if they hit escape without entering anything
-				-- An empty string if they just hit enter
-				-- Or the actual line of text they wrote
-				if line then
-					window:perform_action(
-						act.SwitchToWorkspace({
-							name = line,
-						}),
-						pane
-					)
-				end
-			end),
-		}),
+		action = workspace_switcher.switch_workspace(),
 	},
 	--misc
 	{
@@ -162,9 +199,7 @@ for i = 1, 4 do
 	})
 end
 
--- plugins
--- splits
-local splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+-- Splits that work across nvim and wezterm
 splits.apply_to_config(config, {
 	direction_keys = {
 		move = { "h", "j", "k", "l" },
@@ -175,7 +210,5 @@ splits.apply_to_config(config, {
 		resize = "CTRL",
 	},
 })
-
--- resurrect
 
 return config
