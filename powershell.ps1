@@ -27,5 +27,13 @@ function lg {
 }
 
 function regen {
-    python ./regenerate_cmake.py
+    python ./regenerate_cmake.py -o all
+}
+
+function clswitch {
+    param (
+        [string]$Config
+    )
+    $cmd = "switch_" + $Config
+    python ./regenerate_cmake.py -o $cmd
 }

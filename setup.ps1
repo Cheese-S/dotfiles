@@ -11,7 +11,7 @@ New-Item -Path $PROFILE -ItemType SymbolicLink -Value ~/.config/powershell.ps1
 New-Item -Path ~/AppData/Local/nvim -ItemType SymbolicLink -Value ~/.config/nvim
 
 winget install --id=LLVM.LLVM  -e -i 
-winget install --id=Neovim.Neovim  -e
+winget install --id=Neovim.Neovim.Nightly  -e
 winget install --id=BurntSushi.ripgrep.MSVC  -e
 winget install --id=junegunn.fzf  -e
 	
@@ -26,3 +26,5 @@ winget install --id=JesseDuffield.lazygit -e
 winget install --id=Kitware.CMake -e
  
 winget install --id=Ninja-build.Ninja  -e
+
+winget install XAMPPRocky.tokei
