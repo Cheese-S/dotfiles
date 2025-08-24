@@ -13,5 +13,6 @@ return {
 		vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 		vim.cmd([[highlight FloatBorder guibg=None]])
 		vim.cmd([[highlight FloatTitle guibg=None]])
+		vim.cmd([[highlight Pmenu guibg=None]])
 	end,
 }

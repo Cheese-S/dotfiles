@@ -3,7 +3,7 @@ return {
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		"hrsh7th/cmp-nvim-lsp",
+		-- "hrsh7th/cmp-nvim-lsp",
 	},
 	config = function()
 		-- mason setup
@@ -24,12 +24,13 @@ return {
 		mason.setup()
 
 		-- mason lspconfig setup
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+		-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local lspconfig = require("lspconfig")
 		local lspconfig_default = require("lspconfig").util.default_config
 		local mason_lspconfig = require("mason-lspconfig")
-		lspconfig_default.capabilities =
-			vim.tbl_deep_extend("force", lspconfig_default.capabilities, cmp_nvim_lsp.default_capabilities())
+		-- lspconfig_default.capabilities =
+		-- vim.tbl_deep_extend("force", lspconfig_default.capabilities, cmp_nvim_lsp.default_capabilities())
+
 		mason_lspconfig.setup({
 			ensure_installed = {
 				-- lsps
@@ -45,6 +46,8 @@ return {
 				end,
 			},
 		})
+
+		lspconfig.lua_ls.setup({})
 
 		lspconfig.clangd.setup({
 			cmd = {

@@ -31,4 +31,24 @@ return {
 		end,
 		ft = { "markdown" },
 	},
+	{
+		"ggandor/leap.nvim",
+		enabled = true,
+		config = function()
+			local leap = require("leap")
+			leap.opts.equivalence_classes = { " \t\r\n", "([{", ")]}", "'\"`" }
+			leap.opts.preview_filter = function(ch0, ch1, ch2)
+				return not (ch1:match("%s") or ch0:match("%w") and ch1:match("%w") and ch2:match("%w"))
+			end
+		end,
+	},
+	{
+		"kylechui/nvim-surround",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	},
 }

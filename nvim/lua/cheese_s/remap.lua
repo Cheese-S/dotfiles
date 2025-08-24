@@ -9,7 +9,7 @@ map("n", "<leader>ss", "<cmd>w<cr><esc>")
 map("n", "<leader>sa", "<cmd>wa<CR><esc>")
 
 -- search and replace
-map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- jump between windows
 -- map({ "n", "v", "i" }, "<c-k>", "<c-w><up>")
@@ -23,6 +23,11 @@ map({ "n", "v" }, "<leader>wk", "<cmd>leftabove hor sp<cr>")
 map({ "n", "v" }, "<leader>wh", "<cmd>leftabove vert sp<cr>")
 map({ "n", "v" }, "<leader>wj", "<cmd>belowright hor sp<cr>")
 
+map({ "n", "v" }, "<leader>wml", "<C-w>l")
+map({ "n", "v" }, "<leader>wmk", "<C-w>k")
+map({ "n", "v" }, "<leader>wmh", "<C-w>h")
+map({ "n", "v" }, "<leader>wmj", "<C-w>j")
+
 -- resize window
 -- map("n", "<C-Up>", "<cmd> resize +5<cr>")
 -- map("n", "<C-Down>", "<cmd> resize -5<cr>")
@@ -32,6 +37,8 @@ map({ "n", "v" }, "<leader>wj", "<cmd>belowright hor sp<cr>")
 -- jump around and refocus
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-b>", "<C-b>zz")
+map("n", "<C-f>", "<C-f>zz")
 
 -- move lines above below
 map("n", "<A-j>", ":m+ <cr> ==")
@@ -62,6 +69,10 @@ map({ "n" }, "<leader>;", function()
 	vim.cmd("norm A;")
 	vim.api.nvim_win_set_cursor(0, cursor)
 end, { noremap = true, silent = true })
+
+-- quickfix
+map("n", "]q", "<cmd>cnext<CR>")
+map("n", "[q", "<cmd>cprev<CR>")
 
 -- plugins
 -- fzf keymaps
@@ -128,7 +139,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
 		map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
 		map("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-		map("n", "<leader>R", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+		map("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 		map({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
 		map("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 		map("n", "<leader>se", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", opts)
@@ -148,22 +159,25 @@ map({ "n", "v", "i" }, "<c-k>", splits.move_cursor_up)
 map({ "n", "v", "i" }, "<c-l>", splits.move_cursor_right)
 
 -- cmp
-local cmp = require("cmp")
-cmp.setup({
-	mapping = {
-		["<A-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-		["<A-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-		["<S-j>"] = cmp.mapping.scroll_docs(4),
-		["<S-k>"] = cmp.mapping.scroll_docs(-4),
-		["<CR>"] = function(fallback)
-			if cmp.visible() and cmp.get_active_entry() then
-				cmp.confirm()
-			else
-				fallback()
-			end
-		end,
-	},
-})
+-- local cmp = require("cmp")
+-- cmp.setup({
+-- 	mapping = {
+-- 		["<A-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+-- 		["<A-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+-- 		["<S-j>"] = cmp.mapping.scroll_docs(4),
+-- 		["<S-k>"] = cmp.mapping.scroll_docs(-4),
+-- 		["<CR>"] = function(fallback)
+-- 			if cmp.visible() and cmp.get_active_entry() then
+-- 				cmp.confirm()
+-- 			else
+-- 				fallback()
+-- 			end
+-- 		end,
+-- 	},
+-- })
+
+-- blink.cmp
+-- local blink = require("blink.cmp")
 
 -- gitsigns
 local gitsigns = require("gitsigns")
@@ -192,3 +206,11 @@ map("n", "<leader>hp", gitsigns.preview_hunk_inline)
 map("n", "<leader>mp", function()
 	vim.cmd("MarkdownPreview")
 end)
+
+-- leap
+vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
+vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
+
+-- jump to errors
+map("n", "]e", vim.diagnostic.goto_next)
+map("n", "[e", vim.diagnostic.goto_prev)

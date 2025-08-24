@@ -57,3 +57,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "help",
 	command = "wincmd L",
 })
+
+-- diagnostic
+vim.diagnostic.config({ virtual_text = true })
