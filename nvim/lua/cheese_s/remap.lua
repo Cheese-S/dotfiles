@@ -74,6 +74,9 @@ end, { noremap = true, silent = true })
 map("n", "]q", "<cmd>cnext<CR>")
 map("n", "[q", "<cmd>cprev<CR>")
 
+-- search and replace
+map("n", "<leader>rr", ":%s/<C-r><C-w>//g<Left><Left>")
+
 -- plugins
 -- fzf keymaps
 local fzf = require("fzf-lua")
@@ -87,11 +90,8 @@ map("n", "<leader>fa", fzf.live_grep)
 
 fzf.setup({
 	keymap = {
-		builtin = {
-			["<S-j>"] = "preview-down",
-			["<S-k>"] = "preview-up",
-			["<S-down>"] = "preview-page-down",
-			["<S-up>"] = "preview-page-up",
+		fzf = {
+			["ctrl-q"] = "select-all+accept",
 		},
 	},
 })
@@ -139,7 +139,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
 		map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
 		map("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-		map("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+		map("n", "<leader>rl", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
 		map({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
 		map("n", "<leader>.", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 		map("n", "<leader>se", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", opts)
@@ -212,5 +212,20 @@ vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
 vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
 
 -- jump to errors
-map("n", "]e", vim.diagnostic.goto_next)
-map("n", "[e", vim.diagnostic.goto_prev)
+map("n", "]e", function()
+	vim.diagnostic.jump({ count = 1, float = true })
+end)
+
+map("n", "[e", function()
+	vim.diagnostic.jump({ count = -1, float = true })
+end)
+
+-- dap
+local dap = require("dap")
+map("n", "<leader>dd", dap.continue)
+map("n", "<leader>dp", dap.terminate)
+map("n", "<leader>db", dap.toggle_breakpoint)
+map("n", "<leader>dn", dap.clear_breakpoints)
+map("n", "<leader>dj", dap.step_into)
+map("n", "<leader>dk", dap.step_out)
+map("n", "<leader>dl", dap.step_over)

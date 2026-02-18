@@ -9,7 +9,7 @@ local is_windows <const> = not is_darwin
 if is_windows then
 	config.default_prog = { "powershell.exe" }
 	config.win32_system_backdrop = "Acrylic"
-	config.window_background_opacity = 0.9
+	config.window_background_opacity = 1.0
 end
 
 -- mac only

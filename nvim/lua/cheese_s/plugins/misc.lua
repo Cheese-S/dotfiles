@@ -32,7 +32,7 @@ return {
 		ft = { "markdown" },
 	},
 	{
-		"ggandor/leap.nvim",
+		url = "https://codeberg.org/andyg/leap.nvim",
 		enabled = true,
 		config = function()
 			local leap = require("leap")
