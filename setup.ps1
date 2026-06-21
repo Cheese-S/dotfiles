@@ -29,8 +29,4 @@ winget install --id=Ninja-build.Ninja  -e
 
 winget install XAMPPRocky.tokei
 
-# Install MSYS2 and install mingw. 
-# This is for ASAN
-# mingw-w64-clang-x86_64-compiler-rt
-# This is for CLANG
-# mingw-w64-clang-x86_64-clang
+winget install jj-vcs.jj

@@ -220,6 +220,23 @@ map("n", "[e", function()
 	vim.diagnostic.jump({ count = -1, float = true })
 end)
 
+-- divider
+local function comment_divider()
+	local line = vim.api.nvim_get_current_line()
+
+	local width = 76
+	local padding = math.max(0, width - #line - 2)
+
+	local left = string.rep("-", math.floor(padding / 2))
+	local right = string.rep("-", padding - #left)
+
+	vim.api.nvim_set_current_line(string.format("// %s %s %s", left, line, right))
+end
+
+vim.keymap.set("n", "<leader>x", comment_divider, {
+	desc = "Create comment divider",
+})
+
 -- dap
 local dap = require("dap")
 map("n", "<leader>dd", dap.continue)

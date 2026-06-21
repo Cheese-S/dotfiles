@@ -178,6 +178,11 @@ config.keys = {
 			end)
 		end),
 	},
+	{
+		key = "Enter",
+		mods = "ALT",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
 	-- workspaces
 	{
 		key = "g",
