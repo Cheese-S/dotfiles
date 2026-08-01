@@ -221,20 +221,61 @@ map("n", "[e", function()
 end)
 
 -- divider
+local WIDTH = 78
+local INNER = WIDTH - 6
+
 local function comment_divider()
 	local line = vim.api.nvim_get_current_line()
 
-	local width = 76
-	local padding = math.max(0, width - #line - 2)
+	local prefix = "// "
+	local suffix = " //"
+	local inner = WIDTH - #prefix - #suffix
 
-	local left = string.rep("-", math.floor(padding / 2))
-	local right = string.rep("-", padding - #left)
+	local text = " " .. line .. " "
+	if #text > inner then
+		text = text:sub(1, inner)
+	end
 
-	vim.api.nvim_set_current_line(string.format("// %s %s %s", left, line, right))
+	local padding = inner - #text
+	local left = math.floor(padding / 2)
+	local right = padding - left
+
+	local result = string.format("%s%s%s", prefix, string.rep("-", left) .. text .. string.rep("-", right), suffix)
+
+	vim.api.nvim_set_current_line(result)
 end
 
-vim.keymap.set("n", "<leader>x", comment_divider, {
+local function comment_box()
+	local line = vim.api.nvim_get_current_line()
+
+	local inner = INNER
+
+	local text = " " .. line .. " "
+	if #text > inner then
+		text = text:sub(1, inner)
+	end
+
+	local padding = inner - #text
+	local left = math.floor(padding / 2)
+	local right = padding - left
+
+	local border = string.rep("-", inner)
+
+	local top = string.format("/* %s */", border)
+	local mid = string.format("/* %s%s%s */", string.rep(" ", left), text, string.rep(" ", right))
+
+	vim.api.nvim_set_current_line(top)
+	vim.api.nvim_put({ mid, top }, "l", true, true)
+end
+
+vim.keymap.set("n", "<leader>x", comment_divider, { desc = "Comment divider" })
+vim.keymap.set("n", "<leader>X", comment_box, { desc = "Comment box" })
+vim.keymap.set("n", "<leader>xl", comment_divider, {
 	desc = "Create comment divider",
+})
+
+vim.keymap.set("n", "<leader>xb", comment_box, {
+	desc = "Create comment box",
 })
 
 -- dap

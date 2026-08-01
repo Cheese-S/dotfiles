@@ -1,4 +1,4 @@
-local opt = vim.opt
+local opt = vim.opt_local
 
 opt.textwidth = 0
 opt.wrapmargin = 0
